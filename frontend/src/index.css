@@ -788,4 +788,203 @@ body::before {
   .app-container {
     padding: 1rem;
   }
+
+  .model-options {
+    flex-direction: column;
+  }
 }
+
+/* =============================================
+   Model Selector
+   ============================================= */
+.model-selector {
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  width: 100%;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--glass-shadow);
+  padding: 1.25rem 1.5rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.model-selector:hover {
+  border-color: var(--glass-border-bright);
+}
+
+.model-selector-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.model-icon-wrap {
+  background: rgba(29, 185, 84, 0.12);
+  color: var(--green-400);
+  padding: 0.55rem;
+  border-radius: 12px;
+  border: 1px solid rgba(29, 185, 84, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.model-selector-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.model-options {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.model-option {
+  flex: 1;
+  min-width: 140px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  text-align: left;
+  color: var(--text-main);
+}
+
+.model-option:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.model-option.active {
+  background: rgba(29, 185, 84, 0.12);
+  border-color: rgba(29, 185, 84, 0.45);
+  box-shadow:
+    0 0 20px rgba(29, 185, 84, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.model-option-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.model-option.active .model-option-name {
+  color: var(--green-300);
+}
+
+.model-option-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+/* =============================================
+   Model Switch — Glassmorphic Reload Transition
+   ============================================= */
+
+/* Fade-out + blur when reloading */
+.glass-reloading {
+  position: relative;
+  animation: glassBlurOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Fade-in + un-blur when new result arrives */
+.glass-reveal {
+  animation: glassBlurIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes glassBlurOut {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.4;
+    filter: blur(6px);
+    transform: scale(0.98);
+  }
+}
+
+@keyframes glassBlurIn {
+  0% {
+    opacity: 0.4;
+    filter: blur(6px);
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+/* Frosted overlay + shimmer sweep */
+.reload-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  border-radius: 24px;
+  background: rgba(10, 26, 20, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  animation: overlayFadeIn 0.3s ease forwards;
+}
+
+.reload-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(0, 255, 136, 0.06) 45%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(0, 255, 136, 0.06) 55%,
+    transparent 65%
+  );
+  animation: shimmerSweep 1.4s ease-in-out infinite;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shimmerSweep {
+  0%   { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+
+/* Spinner inside overlay */
+.reload-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--green-400);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  z-index: 11;
+  filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.35));
+}
+
+
