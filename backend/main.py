@@ -141,12 +141,12 @@ def format_class_name(class_name: str) -> str:
 
 async def get_llm_advice(disease_name: str) -> dict:
     """Call the local LLM to get prevention and cure advice."""
-    url = "http://10.14.189.215:1234/v1/chat/completions"
+    url = "http://192.168.1.4:1234/v1/chat/completions"
 
     prompt = f"The plant has {disease_name}. Provide medium-length advice. Give exactly 2 short bullet points for Prevention and exactly 2 short bullet points for Cure. Maximum 1 sentence per bullet point. Do NOT start with greetings, 'Okay', 'Here is', or any intro/outro filler. Just output the numbered lists."
 
     payload = {
-        "model": "google/gemma-3-4b",
+        "model": "google/gemma-4-26b-a4b",
         "messages": [
             {"role": "system", "content": "You are a professional agricultural expert. Provide concise, actionable advice. Output ONLY the requested bullet points. No conversational text."},
             {"role": "user", "content": prompt}
