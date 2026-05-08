@@ -141,7 +141,7 @@ def format_class_name(class_name: str) -> str:
 
 async def get_llm_advice(disease_name: str) -> dict:
     """Call the local LLM to get prevention and cure advice."""
-    url = "http://192.168.1.4:1234/v1/chat/completions"
+    url = "http://192.168.1.7:1234/v1/chat/completions"
 
     prompt = f"The plant has {disease_name}. Provide medium-length advice. Give exactly 2 short bullet points for Prevention and exactly 2 short bullet points for Cure. Maximum 1 sentence per bullet point. Do NOT start with greetings, 'Okay', 'Here is', or any intro/outro filler. Just output the numbered lists."
 
@@ -152,7 +152,7 @@ async def get_llm_advice(disease_name: str) -> dict:
             {"role": "user", "content": prompt}
         ],
         "temperature": 0.3,
-        "max_tokens": 500
+        "max_tokens": 2000
     }
 
     try:
